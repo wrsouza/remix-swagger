@@ -1,6 +1,6 @@
+import { useMemo, useState } from "react";
 import { IInfo, ITag } from "~/hooks/swagger/interfaces";
 import { useUsers } from "./users";
-import { useMemo, useState } from "react";
 
 export function useSwagger() {
   const [spec, setSpec] = useState({});
@@ -8,7 +8,7 @@ export function useSwagger() {
 
   function getSpec() {
     setSpec({
-      openapi: "3.0.0",
+      openapi: "3.1.0",
       info: getInfo(),
       tags: getTags(),
       components: getComponents(),

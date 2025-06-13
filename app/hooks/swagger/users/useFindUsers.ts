@@ -1,50 +1,69 @@
 export function useFindUsers() {
   function getParameters() {
-    return [
-      {
-        name: "id",
-        in: "query",
-        description: "find by Ids (id1,id2,id3...)",
-        required: false,
+    return [getId(), getName(), getEmail(), getPage(), getRows(), getSort()];
+  }
+
+  function getId() {
+    return {
+      name: "id",
+      in: "query",
+      description: "find by Ids (id1, id2, id3...)",
+      required: false,
+      type: "string",
+    };
+  }
+
+  function getName() {
+    return {
+      name: "name",
+      in: "query",
+      description: "find by Name",
+      required: false,
+      type: "string",
+    };
+  }
+
+  function getEmail() {
+    return {
+      name: "email",
+      in: "query",
+      description: "find by Email",
+      required: false,
+      type: "string",
+    };
+  }
+
+  function getPage() {
+    return {
+      name: "page",
+      in: "query",
+      description: "set page number",
+      required: false,
+      type: "integer",
+      default: 1,
+    };
+  }
+
+  function getRows() {
+    return {
+      name: "rows",
+      in: "query",
+      description: "set number of rows",
+      required: false,
+      type: "integer",
+      default: 20,
+    };
+  }
+
+  function getSort() {
+    return {
+      name: "sort",
+      in: "query",
+      description: "sort users by field",
+      required: false,
+      schema: {
         type: "string",
-      },
-      {
-        name: "name",
-        in: "query",
-        description: "find by Name",
-        required: false,
-        type: "string",
-      },
-      {
-        name: "email",
-        in: "query",
-        description: "find by Email",
-        required: false,
-        type: "string",
-      },
-      {
-        name: "page",
-        in: "query",
-        description: "set page number",
-        required: false,
-        type: "number",
-        default: 1,
-      },
-      {
-        name: "rows",
-        in: "query",
-        description: "set number of rows",
-        required: false,
-        type: "number",
-        default: 20,
-      },
-      {
-        name: "sort",
-        in: "query",
-        description: "sort users by field",
-        required: false,
-        type: "string",
-        default: "-createdAt",
+        example: "-createdAt",
         enum: [
           "id",
           "-id",
@@ -56,7 +75,7 @@ export function useFindUsers() {
           "-createdAt",
         ],
       },
-    ];
+    };
   }
 
   function getSecurity() {
