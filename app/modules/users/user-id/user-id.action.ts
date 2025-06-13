@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, json } from "@remix-run/node";
+import { ActionFunctionArgs } from "@remix-run/node";
 import {
   BadRequestException,
   MethodNotAllowedException,
@@ -6,25 +6,31 @@ import {
 } from "~/common";
 import { AuthService } from "~/modules/users/providers";
 import { ValidationService } from "~/modules/users/providers/validation/validation.service";
-import { UserCreateSchema } from "~/modules/users/schemas";
+import { UserUpdateSchema } from "~/modules/users/schemas";
 import { UsersModule } from "~/modules/users/users.module";
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({ request, params }: ActionFunctionArgs) {
   try {
-    if (request.method !== "POST") {
+    if (request.method !== "PUT" && request.method !== "DELETE") {
       throw new MethodNotAllowedException(
-        `method ${request.method} not allowed`
+        `Method ${request.method} not allowed`
       );
     }
 
     AuthService.validate(request);
 
-    const body = await request.json();
-    ValidationService.validate(body, UserCreateSchema);
-
+    const id = params.id as string;
     const controller = UsersModule.getController(request);
-    const result = await controller.create(body);
-    return json(result, { status: 201 });
+
+    if (request.method === "PUT") {
+      const body = await request.json();
+      ValidationService.validate(body, UserUpdateSchema);
+      const result = await controller.update(id, body);
+      return new Response(JSON.stringify(result), { status: 200 });
+    }
+
+    await controller.remove(id);
+    return new Response(undefined, { status: 204 });
   } catch (err) {
     if (
       err instanceof UnauthorizeException ||

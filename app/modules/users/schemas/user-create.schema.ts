@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 
 export const UserCreateSchema = z.object({
   name: z.string().max(100),
@@ -7,3 +7,5 @@ export const UserCreateSchema = z.object({
   isActive: z.boolean(),
   password: z.string().min(6).max(20),
 });
+
+export type IUserCreate = z.infer<typeof UserCreateSchema>;

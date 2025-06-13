@@ -7,3 +7,5 @@ export const UserUpdateSchema = z.object({
   isActive: z.boolean().optional(),
   password: z.string().min(6).max(20).optional(),
 });
+
+export type IUserUpdate = z.infer<typeof UserUpdateSchema>;

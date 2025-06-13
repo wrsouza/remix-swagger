@@ -1,17 +1,19 @@
 import { IInfo, ITag } from "~/hooks/swagger/interfaces";
 import { useUsers } from "./users";
+import { useMemo, useState } from "react";
 
 export function useSwagger() {
+  const [spec, setSpec] = useState({});
   const users = useUsers();
 
   function getSpec() {
-    return {
+    setSpec({
       openapi: "3.0.0",
       info: getInfo(),
       tags: getTags(),
       components: getComponents(),
       paths: getPaths(),
-    };
+    });
   }
 
   function getInfo(): IInfo {
@@ -49,7 +51,9 @@ export function useSwagger() {
     };
   }
 
+  useMemo(() => getSpec(), []);
+
   return {
-    getSpec,
+    spec,
   };
 }

@@ -1,8 +1,7 @@
-import { Prisma, User } from "generated/prisma";
 import { IUser } from "~/modules/users/interfaces";
 import { IFilter } from "~/modules/users/providers";
-import { IUserCreate, IUserUpdate } from "~/modules/users/schemas";
 import { IUserFindMany, IUserMapper } from "./interfaces";
+import { Prisma, User } from "@prisma/client";
 
 export class UserMapper implements IUserMapper {
   findMany(filters: IFilter): IUserFindMany {
@@ -43,40 +42,6 @@ export class UserMapper implements IUserMapper {
       isActive: user.isActive,
       createdAt: user.createdAt,
     }));
-  }
-
-  async create(request: Request): Promise<IUserCreate> {
-    const json = await request.json();
-    const name = json.name;
-    const email = json.email;
-    const isAdmin = json.isAdmin;
-    const isActive = json.isActive;
-    const password = json.password;
-
-    return {
-      name,
-      email,
-      isAdmin,
-      isActive,
-      password,
-    };
-  }
-
-  async update(request: Request): Promise<IUserUpdate> {
-    const json = 
-    const name = json.name;
-    const email = json.email;
-    const isAdmin = json.isAdmin;
-    const isActive = json.isActive;
-    const password = json.password;
-
-    return {
-      name,
-      email,
-      isAdmin,
-      isActive,
-      password,
-    };
   }
 
   private getWhereId(filters: IFilter): Prisma.UserWhereInput {

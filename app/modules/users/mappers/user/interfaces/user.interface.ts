@@ -1,7 +1,7 @@
-import { User } from "generated/prisma";
 import { IUser } from "~/modules/users/interfaces";
 import { IFilter } from "~/modules/users/providers";
 import { IUserFindMany } from "./find-many.interface";
+import { User } from "@prisma/client";
 
 export interface IUserMapper {
   findMany(filters: IFilter): IUserFindMany;

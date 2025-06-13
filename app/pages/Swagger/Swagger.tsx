@@ -3,6 +3,6 @@ import "swagger-ui-react/swagger-ui.css";
 import { useSwagger } from "~/hooks";
 
 export function SwaggerPage() {
-  const { getSpec } = useSwagger();
-  return <SwaggerUI spec={getSpec()} />;
+  const { spec } = useSwagger();
+  return <SwaggerUI spec={spec} />;
 }

@@ -1,6 +1,6 @@
-import { Prisma, PrismaClient, User } from "generated/prisma";
 import { IUserFindMany } from "~/modules/users/mappers";
 import { IUserRepository } from "./interfaces";
+import { Prisma, PrismaClient, User } from "@prisma/client";
 
 export class UserRepository implements IUserRepository {
   constructor(private readonly client: PrismaClient) {}
