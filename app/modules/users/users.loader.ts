@@ -1,4 +1,4 @@
-import { json, LoaderFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs } from "@remix-run/node";
 import { UnauthorizeException } from "~/common";
 import { AuthService } from "~/modules/users/providers";
 import { UsersModule } from "~/modules/users/users.module";
@@ -9,7 +9,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
     const controller = UsersModule.getController(request);
     const result = await controller.paginate();
-    return json(result, { status: 200 });
+    return new Response(JSON.stringify(result), { status: 200 });
   } catch (err) {
     if (err instanceof UnauthorizeException) {
       return new Response(JSON.stringify(err.message), {

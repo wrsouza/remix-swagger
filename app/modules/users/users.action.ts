@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, json } from "@remix-run/node";
+import { ActionFunctionArgs } from "@remix-run/node";
 import {
   BadRequestException,
   MethodNotAllowedException,
@@ -24,7 +24,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
     const controller = UsersModule.getController(request);
     const result = await controller.create(body);
-    return json(result, { status: 201 });
+    return new Response(JSON.stringify(result), { status: 201 });
   } catch (err) {
     if (
       err instanceof UnauthorizeException ||
