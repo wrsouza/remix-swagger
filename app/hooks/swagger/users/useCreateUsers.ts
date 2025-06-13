@@ -1,4 +1,4 @@
-export function useFindUsers() {
+export function useCreateUsers() {
   function getParameters() {
     return [
       {
@@ -65,8 +65,8 @@ export function useFindUsers() {
 
   function getResponses() {
     return {
-      "200": {
-        description: "successful operation",
+      "201": {
+        description: "User Create",
       },
       "401": {
         description: "Unauthorize",
@@ -80,11 +80,11 @@ export function useFindUsers() {
   function getPath() {
     return {
       "/api/users": {
-        get: {
+        post: {
           tags: ["Users"],
-          summary: "Find Users",
-          description: "Api for search users",
-          operationId: "findUsers",
+          summary: "Create User",
+          description: "Api for create users",
+          operationId: "createUser",
           produces: ["application/json"],
           security: getSecurity(),
           parameters: getParameters(),

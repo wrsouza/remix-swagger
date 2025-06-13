@@ -1,10 +1,10 @@
 export enum SortEnum {
-  "id",
-  "-id",
-  "name",
-  "-name",
-  "email",
-  "-email",
-  "createdAt",
-  "-createdAt",
+  "id" = "id",
+  "-id" = "-id",
+  "name" = "name",
+  "-name" = "-name",
+  "email" = "email",
+  "-email" = "-email",
+  "createdAt" = "createdAt",
+  "-createdAt" = "-createdAt",
 }
