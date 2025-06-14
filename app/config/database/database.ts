@@ -4,7 +4,9 @@ let client: PrismaClient;
 
 export function getConnection(): PrismaClient {
   if (!client) {
-    client = new PrismaClient();
+    client = new PrismaClient({
+      log: ["error"],
+    });
   }
   return client;
 }

@@ -1,7 +1,7 @@
+import { Prisma, User } from "@prisma/client";
 import { IUser } from "~/modules/users/interfaces";
 import { IFilter } from "~/modules/users/providers";
 import { IUserFindMany, IUserMapper } from "./interfaces";
-import { Prisma, User } from "@prisma/client";
 
 export class UserMapper implements IUserMapper {
   findMany(filters: IFilter): IUserFindMany {
@@ -30,7 +30,7 @@ export class UserMapper implements IUserMapper {
   getTotalPages(total: number, filters: IFilter): number {
     return total % filters.rows === 0
       ? total / filters.rows
-      : Math.ceil(total / filters.rows) + 1;
+      : Math.floor(total / filters.rows) + 1;
   }
 
   mapPaginate(users: User[]): IUser[] {
@@ -45,7 +45,7 @@ export class UserMapper implements IUserMapper {
   }
 
   private getWhereId(filters: IFilter): Prisma.UserWhereInput {
-    if (!filters.id) {
+    if (!filters.id?.length) {
       return {};
     }
     return {

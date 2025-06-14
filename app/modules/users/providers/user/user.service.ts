@@ -1,6 +1,5 @@
 import { NotFoundException } from "~/common";
-import { UserResponseDto } from "~/modules/users/dtos";
-import { UserPaginateDto } from "~/modules/users/dtos/user-paginate.dto";
+import { UserPaginateDto, UserResponseDto } from "~/modules/users/dtos";
 import { IUserCreate, IUserUpdate } from "~/modules/users/schemas";
 import { IUserRepository } from "~/repositories";
 import { IUserMapper } from "../../mappers";

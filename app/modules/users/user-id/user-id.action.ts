@@ -1,9 +1,5 @@
 import { ActionFunctionArgs } from "@remix-run/node";
-import {
-  BadRequestException,
-  MethodNotAllowedException,
-  UnauthorizeException,
-} from "~/common";
+import { Fail, MethodNotAllowedException, Result } from "~/common";
 import { AuthService } from "~/modules/users/providers";
 import { ValidationService } from "~/modules/users/providers/validation/validation.service";
 import { UserUpdateSchema } from "~/modules/users/schemas";
@@ -25,26 +21,14 @@ export async function action({ request, params }: ActionFunctionArgs) {
     if (request.method === "PUT") {
       const body = await request.json();
       ValidationService.validate(body, UserUpdateSchema);
+
       const result = await controller.update(id, body);
-      return new Response(JSON.stringify(result), { status: 200 });
+      return Result(result);
     }
 
     await controller.remove(id);
-    return new Response(undefined, { status: 204 });
+    return Result({}, 204);
   } catch (err) {
-    if (
-      err instanceof UnauthorizeException ||
-      err instanceof MethodNotAllowedException ||
-      err instanceof BadRequestException
-    ) {
-      return new Response(JSON.stringify(err.message), {
-        status: err.statusCode,
-        statusText: err.statusText,
-      });
-    }
-
-    return new Response(JSON.stringify("unknown error"), {
-      status: 500,
-    });
+    return Fail(err);
   }
 }
