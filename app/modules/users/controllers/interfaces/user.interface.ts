@@ -1,14 +1,9 @@
-import { UserPaginateDto, UserResponseDto } from "~/modules/users/dtos";
-import { IUserCreate, IUserUpdate } from "~/modules/users/schemas";
+import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 
 export interface IUserController {
-  paginate(): Promise<UserPaginateDto>;
-
-  create(body: IUserCreate): Promise<UserResponseDto>;
-
-  find(id: string): Promise<UserResponseDto>;
-
-  update(id: string, body: IUserUpdate): Promise<UserResponseDto>;
-
-  remove(id: string): Promise<void>;
+  paginate(data: LoaderFunctionArgs): Promise<Response>;
+  create(data: ActionFunctionArgs): Promise<Response>;
+  find(data: LoaderFunctionArgs): Promise<Response>;
+  update(data: ActionFunctionArgs): Promise<Response>;
+  remove(data: ActionFunctionArgs): Promise<Response>;
 }

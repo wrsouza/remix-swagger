@@ -2,9 +2,10 @@ import { BadRequestException, SortEnum } from "~/common";
 import { IFilter, IQueryFilterService, ISort } from "./interfaces";
 
 export class QueryFilterService implements IQueryFilterService {
-  constructor(private readonly params: URLSearchParams) {}
+  private params!: URLSearchParams;
 
-  getFilters(): IFilter {
+  getFilters(request: Request): IFilter {
+    this.setParams(request);
     const sortData = this.getSort();
     return {
       id: this.getId(),
@@ -14,6 +15,14 @@ export class QueryFilterService implements IQueryFilterService {
       rows: this.getRows(),
       ...sortData,
     };
+  }
+
+  private setParams(request: Request): void {
+    const urlParts = request.url.split("?");
+    if (urlParts.length > 1) {
+      this.params = new URLSearchParams(urlParts[1]);
+    }
+    this.params = new URLSearchParams();
   }
 
   private getId(): string[] {

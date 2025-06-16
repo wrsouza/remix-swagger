@@ -4,7 +4,7 @@ import "swagger-ui-react/swagger-ui.css";
 
 import { generateDocument } from "~/config/swagger";
 
-export function SwaggerPage() {
+export default function Docs() {
   const [spec] = useState(generateDocument());
   return <SwaggerUI spec={spec} />;
 }

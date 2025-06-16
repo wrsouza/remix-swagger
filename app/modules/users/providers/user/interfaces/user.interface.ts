@@ -2,7 +2,7 @@ import { UserPaginateDto, UserResponseDto } from "~/modules/users/dtos";
 import { IUserCreate, IUserUpdate } from "~/modules/users/schemas";
 
 export interface IUserService {
-  paginate(): Promise<UserPaginateDto>;
+  paginate(request: Request): Promise<UserPaginateDto>;
 
   create(body: IUserCreate): Promise<UserResponseDto>;
 

@@ -1,2 +1,1 @@
-export * from "./users.action";
-export * from "./users.loader";
+export * from "./users.module";

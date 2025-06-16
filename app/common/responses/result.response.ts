@@ -3,7 +3,11 @@ export const Result = (
   status: number = 200,
   statusText: string = "Ok"
 ): Response => {
-  return new Response(JSON.stringify(data), {
+  let response;
+  if (data) {
+    response = JSON.stringify(data);
+  }
+  return new Response(response, {
     status,
     statusText,
     headers: { "Content-Type": "application/json" },

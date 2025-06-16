@@ -13,9 +13,8 @@ export class UserService implements IUserService {
     private readonly mapper: IUserMapper
   ) {}
 
-  async paginate(): Promise<UserPaginateDto> {
-    const filters = this.filterService.getFilters();
-
+  async paginate(request: Request): Promise<UserPaginateDto> {
+    const filters = this.filterService.getFilters(request);
     const mapper = this.mapper.findMany(filters);
     const users = await this.repository.findMany(mapper);
     const userMapped = this.mapper.mapPaginate(users);

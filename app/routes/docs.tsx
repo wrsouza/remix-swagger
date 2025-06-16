@@ -1,1 +1,1 @@
-export { SwaggerPage as default } from "../pages/Swagger";
+export { default } from "../pages/Docs";
