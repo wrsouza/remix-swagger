@@ -24,7 +24,7 @@ export class UserController implements IUserController {
   async paginate({ request }: LoaderFunctionArgs): Promise<Response> {
     try {
       const data = await this.service.paginate(request);
-      return Result(data, 200);
+      return Result(data);
     } catch (err) {
       return Fail(err);
     }
@@ -37,7 +37,7 @@ export class UserController implements IUserController {
     try {
       const body = await request.json();
       const data = await this.service.create(body);
-      return Result(data);
+      return Result(data, 201);
     } catch (err) {
       return Fail(err);
     }
