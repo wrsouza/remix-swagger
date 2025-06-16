@@ -5,7 +5,7 @@ extendZodWithOpenApi(z);
 
 export const UserCreateSchema = z.object({
   name: z.string().max(100).openapi({ example: "John Doe" }),
-  email: z.string().openapi({ example: "john.doe@domain.com" }),
+  email: z.string().email().openapi({ example: "john.doe@domain.com" }),
   isAdmin: z.boolean().default(false),
   isActive: z.boolean().default(false),
   password: z.string().min(6).max(20).openapi({ example: "password" }),

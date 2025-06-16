@@ -37,12 +37,13 @@ export function Module(controllerClass: any) {
     descriptor.value = async function (
       data: LoaderFunctionArgs | ActionFunctionArgs
     ) {
-      const { request } = data;
-      const url = new URL(request.url);
-      const baseUrl = url.origin;
-      const defaultUrl = request.url.replace(baseUrl, "").split("?")[0];
+      const requestClone = data.request.clone();
 
-      const method = request.method;
+      const url = new URL(requestClone.url);
+      const baseUrl = url.origin;
+      const defaultUrl = requestClone.url.replace(baseUrl, "").split("?")[0];
+
+      const method = requestClone.method;
       const prefix = Reflect.getMetadata(METADATA_KEYS.PREFIX, controllerClass);
       const routes: IRouteDefinition[] = Reflect.getMetadata(
         METADATA_KEYS.ROUTES,

@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import { ActionFunctionArgs } from "@remix-run/node";
 import { ZodSchema } from "zod";
 import { ErrorFormat, ErrorResponse } from "~/common";
 
@@ -27,17 +27,26 @@ export function Validate(schema: ZodSchema) {
   ) {
     const originalMethod = descriptor.value;
 
-    descriptor.value = async function (
-      data: LoaderFunctionArgs | ActionFunctionArgs
-    ) {
-      const requestClone = data.request.clone();
+    descriptor.value = async function (data: ActionFunctionArgs) {
+      try {
+        const requestClone = data.request.clone();
+        const body = await requestClone.json();
+        const validation = schema.safeParse(body);
 
-      const body = await requestClone.json();
-      const validation = schema.safeParse(body);
+        if (!validation.success) {
+          const response = formatErrors(validation.error.format());
+          return new Response(JSON.stringify(response), {
+            status: 400,
+            statusText: "Bad Request",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+        }
 
-      if (!validation.success) {
-        const response = formatErrors(validation.error.format());
-        return new Response(JSON.stringify(response), {
+        return originalMethod.call(this, data);
+      } catch (err) {
+        return new Response(JSON.stringify({ message: "format invalid" }), {
           status: 400,
           statusText: "Bad Request",
           headers: {
@@ -45,8 +54,6 @@ export function Validate(schema: ZodSchema) {
           },
         });
       }
-
-      return originalMethod.call(this, data);
     };
   };
 }
