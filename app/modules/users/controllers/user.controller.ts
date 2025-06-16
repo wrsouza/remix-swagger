@@ -19,8 +19,8 @@ import { IUserController } from "./interfaces";
 export class UserController implements IUserController {
   constructor(private readonly service: IUserService) {}
 
-  @Auth(AuthGuard)
   @Get()
+  @Auth(AuthGuard)
   async paginate({ request }: LoaderFunctionArgs): Promise<Response> {
     try {
       const data = await this.service.paginate(request);
